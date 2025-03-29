@@ -1,1 +1,125 @@
-Hello World!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Portfolio Performance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>Investment Portfolio Performance</h1>
+            <div class="last-updated">Last updated: <span id="update-time">Loading...</span></div>
+        </header>
+
+        <div class="dashboard-controls">
+            <div class="timeframe-selector">
+                <button class="timeframe-btn active" data-timeframe="1m">1M</button>
+                <button class="timeframe-btn" data-timeframe="3m">3M</button>
+                <button class="timeframe-btn" data-timeframe="6m">6M</button>
+                <button class="timeframe-btn" data-timeframe="1y">1Y</button>
+                <button class="timeframe-btn" data-timeframe="all">All</button>
+            </div>
+            <div class="portfolio-selector">
+                <select id="portfolio-select">
+                    <option value="main">Main Portfolio</option>
+                    <option value="growth">Growth Fund</option>
+                    <option value="income">Income Fund</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="performance-metrics">
+            <div class="metric-card">
+                <div class="metric-value" id="current-value">$1,250,000</div>
+                <div class="metric-label">Portfolio Value</div>
+                <div class="metric-change positive" id="value-change">+12.5%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="ytd-return">18.2%</div>
+                <div class="metric-label">YTD Return</div>
+                <div class="metric-comparison">vs Benchmark: <span class="positive">+4.2%</span></div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="sharpe-ratio">1.45</div>
+                <div class="metric-label">Sharpe Ratio</div>
+                <div class="metric-comparison">(Risk-Adjusted)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="max-drawdown">-8.3%</div>
+                <div class="metric-label">Max Drawdown</div>
+                <div class="metric-date">Mar 2020</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="performance-chart"></canvas>
+        </div>
+
+        <div class="portfolio-details">
+            <div class="allocation-section">
+                <h2>Asset Allocation</h2>
+                <div class="allocation-chart-container">
+                    <canvas id="allocation-chart"></canvas>
+                </div>
+                <div class="allocation-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Asset Class</th>
+                                <th>Allocation</th>
+                                <th>Value</th>
+                                <th>Return</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allocation-data">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="holdings-section">
+                <h2>Top Holdings</h2>
+                <div class="holdings-table-container">
+                    <table class="holdings-table">
+                        <thead>
+                            <tr>
+                                <th>Security</th>
+                                <th>Ticker</th>
+                                <th>Shares</th>
+                                <th>Avg Cost</th>
+                                <th>Current Price</th>
+                                <th>Value</th>
+                                <th>Return</th>
+                            </tr>
+                        </thead>
+                        <tbody id="holdings-data">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="performance-comparison">
+            <h2>Performance Comparison</h2>
+            <div class="comparison-chart-container">
+                <canvas id="comparison-chart"></canvas>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            <p>For investor use only. Confidential information.</p>
+            <p>Data is provided for informational purposes only and should not be construed as investment advice.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
