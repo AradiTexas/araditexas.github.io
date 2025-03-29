@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Update timestamp
-    document.getElementById('update-time').textContent = new Date().toLocaleString();
+    // document.getElementById('update-time').textContent = new Date().toLocaleString();
     
     // Sample data - replace with real data from your API
     const sampleData = {
@@ -10,26 +10,23 @@ document.addEventListener('DOMContentLoaded', function() {
             benchmark: [100, 102, 101, 105, 108, 110, 109, 112, 115, 118, 120, 122]
         },
         allocation: {
-            labels: ['Equities', 'Fixed Income', 'Real Estate', 'Commodities', 'Cash'],
-            data: [55, 25, 10, 5, 5],
+            labels: ['8.04 Acre Village', '2.42 Acre Bartlett	 st', '9706 Champion House	', '26M Land	', 'Lake Land	'],
+            data: [16.38, 32.32, 13.88, 12.25, 21.21],
             colors: ['#2962ff', '#00c853', '#ffab00', '#ff3d00', '#78909c']
         },
         holdings: [
-            { name: 'Apple Inc.', ticker: 'AAPL', shares: 500, avgCost: 120, currentPrice: 150 },
-            { name: 'Microsoft Corp.', ticker: 'MSFT', shares: 300, avgCost: 200, currentPrice: 250 },
-            { name: 'Amazon.com Inc.', ticker: 'AMZN', shares: 100, avgCost: 3000, currentPrice: 3200 },
-            { name: 'Tesla Inc.', ticker: 'TSLA', shares: 200, avgCost: 600, currentPrice: 700 },
-            { name: 'Alphabet Inc.', ticker: 'GOOGL', shares: 150, avgCost: 1800, currentPrice: 2000 },
-            { name: 'Berkshire Hathaway', ticker: 'BRK.B', shares: 250, avgCost: 200, currentPrice: 220 },
-            { name: 'Vanguard S&P 500 ETF', ticker: 'VOO', shares: 1000, avgCost: 350, currentPrice: 380 },
-            { name: 'iShares Core Bond ETF', ticker: 'AGG', shares: 500, avgCost: 110, currentPrice: 108 }
+            { name: '8.04 Acre Village',  shares: 43.33, Cost: 390000, expenses: 0 },
+            { name: '2.42 Acre Bartlett	 st',  shares: 100, Cost: 769470.16, expenses: 0 },
+            { name: '9706 Champion House	',  shares: 100, Cost: 330383.95, expenses: 0 },
+            { name: '26M Land	',  shares: 31.3332, Cost: 291712.09, expenses: 0 },
+            { name: 'Lake Land	',  shares: 27.8508, Cost: 504880.79, expenses: 0 },
         ]
     };
 
     // Initialize charts
-    initPerformanceChart();
+    // initPerformanceChart();
     initAllocationChart();
-    initComparisonChart();
+    // initComparisonChart();
     populateAllocationTable();
     populateHoldingsTable();
 
@@ -136,67 +133,67 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function initComparisonChart() {
-        const ctx = document.getElementById('comparison-chart').getContext('2d');
-        window.comparisonChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: sampleData.performance.labels,
-                datasets: [
-                    {
-                        label: 'Portfolio',
-                        data: sampleData.performance.values,
-                        borderColor: '#2962ff', // Fixed CSS variable reference
-                        backgroundColor: 'rgba(41, 98, 255, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.4
-                    },
-                    {
-                        label: 'Benchmark (S&P 500)',
-                        data: sampleData.performance.benchmark,
-                        borderColor: '#78909c', // Fixed CSS variable reference
-                        backgroundColor: 'rgba(120, 144, 156, 0.1)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        tension: 0.4
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label}: ${context.raw.toFixed(1)}%`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        ticks: {
-                            callback: function(value) {
-                                return value + '%';
-                            }
-                        }
-                    }
-                },
-                interaction: {
-                    mode: 'nearest',
-                    axis: 'x',
-                    intersect: false
-                }
-            }
-        });
-    }
+    // function initComparisonChart() {
+    //     const ctx = document.getElementById('comparison-chart').getContext('2d');
+    //     window.comparisonChart = new Chart(ctx, {
+    //         type: 'line',
+    //         data: {
+    //             labels: sampleData.performance.labels,
+    //             datasets: [
+    //                 {
+    //                     label: 'Portfolio',
+    //                     data: sampleData.performance.values,
+    //                     borderColor: '#2962ff', // Fixed CSS variable reference
+    //                     backgroundColor: 'rgba(41, 98, 255, 0.1)',
+    //                     borderWidth: 2,
+    //                     tension: 0.4
+    //                 },
+    //                 {
+    //                     label: 'Benchmark (S&P 500)',
+    //                     data: sampleData.performance.benchmark,
+    //                     borderColor: '#78909c', // Fixed CSS variable reference
+    //                     backgroundColor: 'rgba(120, 144, 156, 0.1)',
+    //                     borderWidth: 2,
+    //                     borderDash: [5, 5],
+    //                     tension: 0.4
+    //                 }
+    //             ]
+    //         },
+    //         options: {
+    //             responsive: true,
+    //             maintainAspectRatio: false,
+    //             plugins: {
+    //                 legend: {
+    //                     position: 'top',
+    //                 },
+    //                 tooltip: {
+    //                     mode: 'index',
+    //                     intersect: false,
+    //                     callbacks: {
+    //                         label: function(context) {
+    //                             return `${context.dataset.label}: ${context.raw.toFixed(1)}%`;
+    //                         }
+    //                     }
+    //                 }
+    //             },
+    //             scales: {
+    //                 y: {
+    //                     beginAtZero: false,
+    //                     ticks: {
+    //                         callback: function(value) {
+    //                             return value + '%';
+    //                         }
+    //                     }
+    //                 }
+    //             },
+    //             interaction: {
+    //                 mode: 'nearest',
+    //                 axis: 'x',
+    //                 intersect: false
+    //             }
+    //         }
+    //     });
+    // }
 
     function populateAllocationTable() {
         const tableBody = document.getElementById('allocation-data');
@@ -223,17 +220,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const tableBody = document.getElementById('holdings-data');
         
         sampleData.holdings.forEach(holding => {
-            const value = (holding.shares * holding.currentPrice).toLocaleString();
-            const returnValue = ((holding.currentPrice - holding.avgCost) / holding.avgCost * 100).toFixed(1);
-            const returnDollar = (holding.shares * (holding.currentPrice - holding.avgCost)).toLocaleString();
+            const value = (holding.shares * holding.expenses).toLocaleString();
+            const returnValue = ((holding.expenses - holding.Cost) / holding.Cost * 100).toFixed(1);
+            const returnDollar = (holding.shares * (holding.expenses - holding.Cost)).toLocaleString();
             
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${holding.name}</td>
-                <td>${holding.ticker}</td>
-                <td>${holding.shares.toLocaleString()}</td>
-                <td>$${holding.avgCost.toLocaleString()}</td>
-                <td>$${holding.currentPrice.toLocaleString()}</td>
+                <td>${holding.shares.toLocaleString()}%</td>
+                <td>$${holding.Cost.toLocaleString()}</td>
+                <td>$${holding.expenses.toLocaleString()}</td>
                 <td>$${value}</td>
                 <td class="${returnValue >= 0 ? 'positive' : 'negative'}">${returnValue >= 0 ? '+' : ''}${returnValue}% ($${returnDollar})</td>
             `;

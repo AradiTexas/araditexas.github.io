@@ -14,10 +14,10 @@
     <div class="dashboard-container">
         <header class="dashboard-header">
             <h1>Investment Portfolio Performance</h1>
-            <div class="last-updated">Last updated: <span id="update-time">Loading...</span></div>
+            <!-- <div class="last-updated">Last updated: <span id="update-time">Loading...</span></div> -->
         </header>
 
-        <div class="dashboard-controls">
+        <!-- <div class="dashboard-controls">
             <div class="timeframe-selector">
                 <button class="timeframe-btn active" data-timeframe="1m">1M</button>
                 <button class="timeframe-btn" data-timeframe="3m">3M</button>
@@ -32,34 +32,34 @@
                     <option value="income">Income Fund</option>
                 </select>
             </div>
-        </div>
+        </div> -->
 
         <div class="performance-metrics">
             <div class="metric-card">
-                <div class="metric-value" id="current-value">$1,250,000</div>
-                <div class="metric-label">Portfolio Value</div>
+                <div class="metric-value" id="current-value">$2,286,446.99</div>
+                <div class="metric-label">Capital</div>
                 <div class="metric-change positive" id="value-change">+12.5%</div>
             </div>
             <div class="metric-card">
                 <div class="metric-value" id="ytd-return">18.2%</div>
-                <div class="metric-label">YTD Return</div>
-                <div class="metric-comparison">vs Benchmark: <span class="positive">+4.2%</span></div>
+                <div class="metric-label">ROI</div>
+                <div class="metric-comparison"> <span class="positive">+4.2%</span></div>
             </div>
             <div class="metric-card">
                 <div class="metric-value" id="sharpe-ratio">1.45</div>
-                <div class="metric-label">Sharpe Ratio</div>
-                <div class="metric-comparison">(Risk-Adjusted)</div>
+                <div class="metric-label">IRR</div>
+                <div class="metric-comparison"><span class="positive">+2%</span></div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" id="max-drawdown">-8.3%</div>
-                <div class="metric-label">Max Drawdown</div>
-                <div class="metric-date">Mar 2020</div>
+                <div class="metric-value" id="max-drawdown">$30,000</div>
+                <div class="metric-label">Revenue</div>
+                <div class="metric-date">As of xx/xx/xxxx</div>
             </div>
         </div>
 
-        <div class="chart-container">
+        <!-- <div class="chart-container">
             <canvas id="performance-chart"></canvas>
-        </div>
+        </div> -->
 
         <div class="portfolio-details">
             <div class="allocation-section">
@@ -90,13 +90,12 @@
                     <table class="holdings-table">
                         <thead>
                             <tr>
-                                <th>Security</th>
-                                <th>Ticker</th>
-                                <th>Shares</th>
-                                <th>Avg Cost</th>
-                                <th>Current Price</th>
-                                <th>Value</th>
-                                <th>Return</th>
+                                <th>Name</th>
+                                <th>Ownership</th>
+                                <th>Cost</th>
+                                <th>null</th>
+                                <th>null</th>
+                                <th>null</th>
                             </tr>
                         </thead>
                         <tbody id="holdings-data">
