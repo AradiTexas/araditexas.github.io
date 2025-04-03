@@ -1,0 +1,6 @@
+a{color:blue}
+a:visited {color:blue} 
+a:link {text-decoration: none}
+a:hover {text-decoration: underline}
+.right{text-align: right; font-family: "Courier"; font-weight: bold; padding-right: .5em}
+.red{text-align: right; color: red; font-family: "Courier"; font-weight: bold}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Preview</title>
+    <style>
+        .preview {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h2>Enter Your Code</h2>
+    <input type="text" id="codeInput" placeholder="Enter code here...">
+    <button onclick="showPreview()">Submit</button>
+
+    <div id="preview1" class="preview">
+                    <h1>Please Pick Which You Would Like to Access</h1>
+        
+        <a href="https://araditexas.com/araditexas/files/reis/">
+        <button>reis</button></a><br>
+        <a href="https://araditexas.com/araditexas/files/aas/">
+        <button>aas</button></a><br>
+        <a href="https://araditexas.com/araditexas/files/rebs/">
+        <button>rebs</button></a><br>
+        <a href="https://araditexas.com/araditexas/files/reps/">
+        <button>reps</button></a><br>
+        <a href="https://araditexas.com/araditexas/files/fm/">
+        <button>fm</button></a><br>
+        <a href="https://araditexas.com/araditexas/files/ress/">
+        <button>ress</button></a><br>
+        <a href="files/fm1314/">
+        <button>fm1314</button></a><br>
+        <a href="files/are/">
+        <button>are</button></a><br>
+    </div>
+    <div id="preview2" class="preview">
+                    <h1>Please Pick Which You Would Like to Access</h1>
+        
+        <a href="https://araditexas.com/araditexas/files/reis/">
+        <button>reis</button></a><br>
+    </div>
+    <div id="preview3" class="preview">This is preview 3.</div>
+
+    <script>
+        function showPreview() {
+            var code = document.getElementById('codeInput').value;
+            
+            // Hide all previews
+            document.querySelectorAll('.preview').forEach(function(preview) {
+                preview.style.display = 'none';
+            });
+            
+            // Show the appropriate preview based on the entered code
+            if (code === 'AradiTexasPartners') {
+                document.getElementById('preview1').style.display = 'block';
+            } else if (code === 'Contractor') {
+                document.getElementById('preview2').style.display = 'block';
+            } else if (code === '789') {
+                document.getElementById('preview3').style.display = 'block';
+            } else {
+                alert('Invalid code!');
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--<title>Index</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<body> -->
+<!--<h2>Enter Your Code</h2> -->
+<!--<input type="text" id="codeInput" placeholder="Enter code here..."> -->
+<!--<button onclick="showPreview()">Submits</button> -->
+<!--    <div id="preview1" class="preview">-->
+        <!--    <h1>Please Pick Which You Would Like to Access</h1>-->
+        
+        <!--<a href="https://araditexas.com/araditexas/files/reis/">-->
+        <!--<button>reis</button></a><br>-->
+        <!--<a href="https://araditexas.com/araditexas/files/aas/">-->
+        <!--<button>aas</button></a><br>-->
+        <!--<a href="https://araditexas.com/araditexas/files/rebs/">-->
+        <!--<button>rebs</button></a><br>-->
+        <!--<a href="https://araditexas.com/araditexas/files/reps/">-->
+        <!--<button>reps</button></a><br>-->
+        <!--<a href="https://araditexas.com/araditexas/files/fm/">-->
+        <!--<button>fm</button></a><br>-->
+        <!--<a href="https://araditexas.com/araditexas/files/ress/">-->
+        <!--<button>ress</button></a><br>-->
+        <!--<a href="files/fm1314/">-->
+        <!--<button>fm1314</button></a><br>-->
+<!--        </div> -->
+<!--    <div id="preview2" class="preview">This is preview 2.</div> -->
+<!--    <div id="preview3" class="preview">This is preview 3.</div> -->
+<!--<script> -->
+<!--function showPreview() { var code = document.getElementById('codeInput').value; document.querySelectorAll('.preview').forEach(function(preview) { preview.style.display = 'none'; });-->
+<!--    if (code === '123') { document.getElementById('preview1').style.display = 'block'; } -->
+<!--    else if (code === '456') { document.getElementById('preview2').style.display = 'block'; } -->
+<!--    else if (code === '789') { document.getElementById('preview3').style.display = 'block'; } else { alert('Invalid code!'); } } -->
+<!--</script> -->
+<!--</body>-->
+<!--<h1>Please Pick Which You Would Like to Access</h1>-->
+
+<!--<a href="https://araditexas.com/araditexas/files/reis/">-->
+<!--<button>reis</button></a><br>-->
+<!--<a href="https://araditexas.com/araditexas/files/aas/">-->
+<!--<button>aas</button></a><br>-->
+<!--<a href="https://araditexas.com/araditexas/files/rebs/">-->
+<!--<button>rebs</button></a><br>-->
+<!--<a href="https://araditexas.com/araditexas/files/reps/">-->
+<!--<button>reps</button></a><br>-->
+<!--<a href="https://araditexas.com/araditexas/files/fm/">-->
+<!--<button>fm</button></a><br>-->
+<!--<a href="https://araditexas.com/araditexas/files/ress/">-->
+<!--<button>ress</button></a><br>-->
+<!--<a href="files/fm1314/">-->
+<!--<button>fm1314</button></a><br>-->
+
+
+<!--</body>-->
+<!--</html>-->

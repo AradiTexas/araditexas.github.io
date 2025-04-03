@@ -1,0 +1,8 @@
+P03 1.55 acres - $12,300.05 = $2.50 fees + $12,297.55
+CAD number 0462270000037
+"P03 Land B 2 LLC_Bammel_Harris, Klein, MUD_2018.pdf"
+ $3,560.54 http://www.tax.co.harris.tx.us/Property/TaxStatement?account=Ev0xv5ckwQAHGYvRm+yHhLgIYQ9s+Wr/Cj2tYpPxwtg= 2019-01-04_P03_2018_taxes_harris.tx.us.pdf
+ $5,793.77 $1.50 fees + $5,792.27 https://kleintax.kleinisd.net/kleinisdtax/accountInfo.asp?lAccountNumber_id=103493 2019-01-04_P03_2018_taxes_kleinisd.net.pdf
+ $2,945.74 $1.00 fee + $2,944.74 http://bli-tax.com/tax-form/?r=19507000000370  2019-01-04_P03_2018_taxes_bli-tax.com.pdf
+----------
+$12,300.05

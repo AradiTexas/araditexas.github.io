@@ -1,0 +1,5 @@
+ $3,250.33 $0.00 $3,250.33 1.pdf https://www.hctax.net/Property/TaxStatement?account=bs47NB+h0tIq37/QsPAq4NAFdiqoFSqUP3VVDme0kGo=   2020 Harris County Tax Statement_0432090051303.pdf
+ $3,423.30 $0.00 $3,423.30 2.pdf http://www.itmservices.com/AcctDetail/847/0432090051303                                            2020 Timber Lane UDTax Statement_0432090051303.pdf
+ $4,902.86 $1.00 $4,901.86 3.pdf https://webpay.aldine.k12.tx.us/WebUI/AccountStatusDetail.aspx?AccountID=144282                    2020 Aldine ISD Tax Statement_0432090051303.pdf      webpay.aldine.k12.tx.us wellithy@arxict.com:REISp02
+----------
+$11,576.49
