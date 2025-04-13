@@ -1,112 +1,74 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Update timestamp
-    // document.getElementById('update-time').textContent = new Date().toLocaleString();
-    
-    // Sample data - replace with real data from your API
-    const sampleData = {
-        performance: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            values: [100, 105, 103, 110, 115, 120, 118, 125, 130, 135, 140, 145],
-            benchmark: [100, 102, 101, 105, 108, 110, 109, 112, 115, 118, 120, 122]
-        },
-        allocation: {
-            labels: ['8.04 Acre Village', '2.42 Acre Bartlett	 st', '9706 Champion House	', '26M Land	', 'Lake Land	'],
-            data: [16.38, 32.32, 13.88, 12.25, 21.21],
-            colors: ['#2962ff', '#00c853', '#ffab00', '#ff3d00', '#78909c']
-        },
-        holdings: [
-            { name: '8.04 Acre Village',  shares: 43.33, Cost: 390000, expenses: 0 },
-            { name: '2.42 Acre Bartlett	 st',  shares: 100, Cost: 769470.16, expenses: 0 },
-            { name: '9706 Champion House	',  shares: 100, Cost: 330383.95, expenses: 0 },
-            { name: '26M Land	',  shares: 31.3332, Cost: 291712.09, expenses: 0 },
-            { name: 'Lake Land	',  shares: 27.8508, Cost: 504880.79, expenses: 0 },
-        ]
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('DOM loaded, initializing dashboard');
+
+    // Sample data structure
+    const accounting = {
+        asset: { name: [], price: [], colors: [], shares: [], expenses: [], revenue: [] },
     };
 
-    // Initialize charts
-    // initPerformanceChart();
-    initAllocationChart();
-    // initComparisonChart();
-    populateAllocationTable();
-    populateHoldingsTable();
-
-    // Timeframe selector functionality
-    document.querySelectorAll('.timeframe-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.timeframe-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            // In a real app, you would fetch new data based on timeframe
-            updateCharts(this.dataset.timeframe);
-        });
-    });
-
-    // Portfolio selector functionality
-    document.getElementById('portfolio-select').addEventListener('change', function() {
-        // In a real app, you would fetch new data based on selected portfolio
-        console.log('Selected portfolio:', this.value);
-    });
-
-    function initPerformanceChart() {
-        const ctx = document.getElementById('performance-chart').getContext('2d');
-        window.performanceChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: sampleData.performance.labels,
-                datasets: [{
-                    label: 'Portfolio Value',
-                    data: sampleData.performance.values,
-                    borderColor: '#2962ff', // Fixed CSS variable reference
-                    backgroundColor: 'rgba(41, 98, 255, 0.1)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label}: $${context.raw.toLocaleString()}`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value.toLocaleString();
-                            }
-                        }
-                    }
-                },
-                interaction: {
-                    mode: 'nearest',
-                    axis: 'x',
-                    intersect: false
-                }
+    try {
+        // Load and process Excel data
+        const response = await fetch('./assets.xlsx');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const data = await response.arrayBuffer();
+        const workbook = XLSX.read(data, { type: 'array' });
+        const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+        
+        // Process asset data
+        accounting.asset = jsonData.reduce((acc, row) => {
+            const value = parseFloat(row.Price);
+            if (row.Asset) {
+                acc.name.push( row.Asset );
+                acc.price.push( row.Price || "Unknown");
+                acc.colors.push(`#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`);
+                acc.shares.push( row.Shares || 'Unknown');
+                acc.expenses.push( row.Expenses || '-');
+                acc.revenue.push( row.Revenue || "-");
             }
-        });
+            return acc;
+        }, { name: [], price: [], colors: [], shares: [], expenses: [], revenue: [] });
+        
+
+        if (accounting.asset.name.length === 0) {
+            throw new Error('No valid data found in Excel file');
+        }
+
+        // Initialize components
+
+        updatePerformanceMetrics(accounting.asset);
+        initAllocationChart();
+        populateTable('allocation-data', accounting.asset.name.map((label, i) => ({
+            name: label,
+            percentage: (accounting.asset.price[i] / accounting.asset.price.reduce((a, b) => a + b, 0) * 100).toFixed(1)+"%",
+            value: "$" + (accounting.asset.price[i] + accounting.asset.expenses[i]).toLocaleString()
+        })));
+        
+        populateTable('holdings-data', accounting.asset.name.map((label, i) => ({
+            name: label,
+            shares: accounting.asset.shares[i].toLocaleString(),
+            cost: accounting.asset.price[i].toLocaleString(),
+            expenses: accounting.asset.expenses[i].toLocaleString(),
+            value: "$" + (accounting.asset.price[i] + accounting.asset.expenses[i] ).toLocaleString(),
+            return: accounting.asset.revenue[i].toLocaleString()
+        })));
+
+    } catch (err) {
+        console.error('Initialization error:', err);
+        alert(`Error: ${err.message}`);
     }
 
     function initAllocationChart() {
-        const ctx = document.getElementById('allocation-chart').getContext('2d');
-        window.allocationChart = new Chart(ctx, {
+        const ctx = document.getElementById('allocation-chart')?.getContext('2d');
+        if (!ctx) throw new Error('Canvas #allocation-chart not found');
+        
+        new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: sampleData.allocation.labels,
+                name: accounting.asset.name,
                 datasets: [{
-                    data: sampleData.allocation.data,
-                    backgroundColor: sampleData.allocation.colors,
+                    data: accounting.asset.price,
+                    backgroundColor: accounting.asset.colors,
                     borderWidth: 1
                 }]
             },
@@ -114,16 +76,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        position: 'right',
-                    },
+                    legend: { position: 'right' },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: context => {
                                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                const value = context.raw;
-                                const percentage = Math.round((value / total) * 100);
-                                return `${context.label}: ${percentage}% ($${(value * 1000).toLocaleString()})`;
+                                const percentage = total ? Math.round((context.raw / total) * 100) : 0;
+                                return `${context.label}: ${percentage}% ($${context.raw.toLocaleString()})`;
                             }
                         }
                     }
@@ -133,123 +92,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // function initComparisonChart() {
-    //     const ctx = document.getElementById('comparison-chart').getContext('2d');
-    //     window.comparisonChart = new Chart(ctx, {
-    //         type: 'line',
-    //         data: {
-    //             labels: sampleData.performance.labels,
-    //             datasets: [
-    //                 {
-    //                     label: 'Portfolio',
-    //                     data: sampleData.performance.values,
-    //                     borderColor: '#2962ff', // Fixed CSS variable reference
-    //                     backgroundColor: 'rgba(41, 98, 255, 0.1)',
-    //                     borderWidth: 2,
-    //                     tension: 0.4
-    //                 },
-    //                 {
-    //                     label: 'Benchmark (S&P 500)',
-    //                     data: sampleData.performance.benchmark,
-    //                     borderColor: '#78909c', // Fixed CSS variable reference
-    //                     backgroundColor: 'rgba(120, 144, 156, 0.1)',
-    //                     borderWidth: 2,
-    //                     borderDash: [5, 5],
-    //                     tension: 0.4
-    //                 }
-    //             ]
-    //         },
-    //         options: {
-    //             responsive: true,
-    //             maintainAspectRatio: false,
-    //             plugins: {
-    //                 legend: {
-    //                     position: 'top',
-    //                 },
-    //                 tooltip: {
-    //                     mode: 'index',
-    //                     intersect: false,
-    //                     callbacks: {
-    //                         label: function(context) {
-    //                             return `${context.dataset.label}: ${context.raw.toFixed(1)}%`;
-    //                         }
-    //                     }
-    //                 }
-    //             },
-    //             scales: {
-    //                 y: {
-    //                     beginAtZero: false,
-    //                     ticks: {
-    //                         callback: function(value) {
-    //                             return value + '%';
-    //                         }
-    //                     }
-    //                 }
-    //             },
-    //             interaction: {
-    //                 mode: 'nearest',
-    //                 axis: 'x',
-    //                 intersect: false
-    //             }
-    //         }
-    //     });
-    // }
-
-    function populateAllocationTable() {
-        const tableBody = document.getElementById('allocation-data');
-        const totalValue = sampleData.allocation.data.reduce((a, b) => a + b, 0);
+    function populateTable(tableId, rows) {
+        const tableBody = document.getElementById(tableId);
+        if (!tableBody) throw new Error(`Element #${tableId} not found`);
         
-        sampleData.allocation.labels.forEach((label, index) => {
-            const value = sampleData.allocation.data[index];
-            const percentage = ((value / totalValue) * 100).toFixed(1);
-            const dollarValue = (value * 1000).toLocaleString();
-            const returnValue = (Math.random() * 15 - 2).toFixed(1);
-            
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${label}</td>
-                <td>${percentage}%</td>
-                <td>$${dollarValue}</td>
-                <td class="${returnValue >= 0 ? 'positive' : 'negative'}">${returnValue >= 0 ? '+' : ''}${returnValue}%</td>
-            `;
-            tableBody.appendChild(row);
-        });
+        tableBody.innerHTML = rows.map(row => 
+            `<tr>${Object.values(row).map(val => `<td>${val}</td>`).join('')}</tr>`
+        ).join('');
     }
 
-    function populateHoldingsTable() {
-        const tableBody = document.getElementById('holdings-data');
+    function updatePerformanceMetrics(rows) {
+        // Calculate total capital (sum of all asset prices + expenses)
+        const totalCapital = rows.price.reduce((sum, price, index) => {
+            return sum + parseFloat(price) + parseFloat(rows.expenses[index] || 0);
+        }, 0);
         
-        sampleData.holdings.forEach(holding => {
-            const value = (holding.shares * holding.expenses).toLocaleString();
-            const returnValue = ((holding.expenses - holding.Cost) / holding.Cost * 100).toFixed(1);
-            const returnDollar = (holding.shares * (holding.expenses - holding.Cost)).toLocaleString();
-            
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${holding.name}</td>
-                <td>${holding.shares.toLocaleString()}%</td>
-                <td>$${holding.Cost.toLocaleString()}</td>
-                <td>$${holding.expenses.toLocaleString()}</td>
-                <td>$${value}</td>
-                <td class="${returnValue >= 0 ? 'positive' : 'negative'}">${returnValue >= 0 ? '+' : ''}${returnValue}% ($${returnDollar})</td>
-            `;
-            tableBody.appendChild(row);
-        });
-    }
-
-    function updateCharts(timeframe) {
-        // In a real app, you would fetch new data based on timeframe
-        console.log('Updating charts for timeframe:', timeframe);
+        // Calculate total revenue
+        const totalRevenue = rows.revenue.reduce((sum, revenue) => {
+            return sum + parseFloat(revenue) || 0;
+        }, 0);
         
-        // For demo purposes, we'll just randomize the data a bit
-        if (window.performanceChart) {
-            const newData = sampleData.performance.values.map(val => {
-                const change = (Math.random() * 10 - 5);
-                return val + change;
-            });
-            
-            window.performanceChart.data.datasets[0].data = newData;
-            window.performanceChart.update();
-        }
+        // Calculate ROI (Return on Investment)
+        // ROI = (Total Revenue - Total Expenses) / Total Capital * 100
+        const totalExpenses = rows.expenses.reduce((sum, expense) => {
+            return sum + parseFloat(expense) || 0;
+        }, 0);
+        
+        const roi = ((totalRevenue - totalExpenses) / totalCapital * 100).toFixed(2);
+        
+        // Calculate IRR (Internal Rate of Return)
+        // Simplified approximation for demonstration (real IRR calculation would need cash flow dates)
+        const irrApproximation = (totalRevenue / totalCapital * 100).toFixed(2);
+        
+        // Update the DOM elements
+        document.getElementById('totalCapital').textContent = `$${totalCapital.toLocaleString()}`;
+        document.getElementById('ROI').textContent = `${roi}%`;
+        document.getElementById('IRR').textContent = `${irrApproximation}%`;
+        document.getElementById('Revenue').textContent = `$${totalRevenue.toLocaleString()}`;
     }
+    
 });
