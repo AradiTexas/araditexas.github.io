@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <title>Contributions</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>Investment Portfolio Performance</h1>
+        </header>
+
+
+        <div class="performance-metrics">
+            <div class="metric-card">
+                <div class="metric-value" id="totalPartners"></div>
+                <div class="metric-label">Number of Partners</div>
+                <div class="date-updated">As of 09/2024</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="totalCapital"></div>
+                <div class="metric-label">Total Capital Invested</div>
+            </div>
+        </div>
+
+        <div class="contributions-section">
+            <h2>Contributions</h2>
+            <div class="contributions-table-container">
+                <table class="contributions-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Ownership</th>
+                            <th>Invested Capital</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contributions-data">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
