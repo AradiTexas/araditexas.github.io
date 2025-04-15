@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                name: accounting.asset.name,
+                labels: accounting.asset.name,
                 datasets: [{
                     data: accounting.asset.price,
                     backgroundColor: accounting.asset.colors,
